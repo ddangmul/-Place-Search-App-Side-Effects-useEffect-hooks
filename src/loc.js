@@ -2,6 +2,7 @@ function toRad(value) {
   return (value * Math.PI) / 180;
 }
 
+// 위도와 경도로 지도상 거리 나타내기
 function calculateDistance(lat1, lng1, lat2, lng2) {
   const R = 6371;
   const dLat = toRad(lat2 - lat1);
@@ -17,6 +18,7 @@ function calculateDistance(lat1, lng1, lat2, lng2) {
   return d;
 }
 
+// data.js의 장소들을 받아서 사용자 위치를 기반으로 거리순으로 정렬된 장소 목록 배열 반환
 export function sortPlacesByDistance(places, lat, lon) {
   const sortedPlaces = [...places];
   sortedPlaces.sort((a, b) => {
