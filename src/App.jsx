@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import Places from "./components/Places.jsx";
 import { AVAILABLE_PLACES } from "./data.js";
@@ -11,18 +11,19 @@ function App() {
   const modal = useRef();
   const selectedPlace = useRef();
   const [pickedPlaces, setPickedPlaces] = useState([]);
+  const [sortedPlaces, setSortedPlaces] = useState([]);
 
-  // geolocation = 공간위치 객체
-  // getCurrentPosition = 사용자의 현재 위치 호출
-  navigator.geolocation.getCurrentPosition((position) => {
-    // 위치가 확인된 후, 브라우저로부터 호출되는 함수
-    const sortedPlaces = sortPlacesByDistance(
-      AVAILABLE_PLACES,
-      position.coords.latitude,
-      position.coords.longitude
-    );
-  });
-  // 호출 시 -> 사용자에게 위치 제공 여부 확인 요구 -> 동의 시, 위치 파악 진행(시간 소요)
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const sortedPlaces = sortPlacesByDistance(
+        AVAILABLE_PLACES,
+        position.coords.latitude,
+        position.coords.longitude
+      );
+
+      setSortedPlaces(sortedPlaces);
+    });
+  }, []);
 
   function handleStartRemovePlace(id) {
     modal.current.open();
@@ -76,7 +77,7 @@ function App() {
         />
         <Places
           title="Available Places"
-          places={AVAILABLE_PLACES}
+          places={sortedPlaces}
           onSelectPlace={handleSelectPlace}
         />
       </main>
