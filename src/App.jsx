@@ -42,6 +42,12 @@ function App() {
       const place = AVAILABLE_PLACES.find((place) => place.id === id);
       return [place, ...prevPickedPlaces];
     });
+
+    // [부수 효과] 로컬스토리지에 저장
+    const storedId = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
+    if (storedId.indexOf(id) === -1) {
+      localStorage.setItem("selectedPlaces", JSON.stringify([id, ...storedId]));
+    }
   }
 
   function handleRemovePlace() {
