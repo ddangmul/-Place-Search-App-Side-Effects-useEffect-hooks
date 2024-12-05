@@ -68,7 +68,7 @@ function App() {
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
     // modal.current.close();
-    // setModalIsOpen(false);
+    setModalIsOpen(false);
 
     // [부수 효과] 로컬 스토리지에서 id 삭제
     const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
