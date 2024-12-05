@@ -16,8 +16,6 @@ const savedPlaces = savedIds.map((id) => {
 // filter로 find가 찾지 못한 경우 반환하는 undefined를 걸러내 오류를 방지해주는 게 좋다.(해당 앱에서는 id가 모두 일치하므로 필요없음)
 
 function App() {
-  // console.log(savedIds);
-  // console.log(savedPlaces);
   const [ModalIsOpen, setModalIsOpen] = useState(false);
   const selectedPlace = useRef();
   const [pickedPlaces, setPickedPlaces] = useState(savedPlaces);
@@ -36,13 +34,11 @@ function App() {
   }, []);
 
   function handleStartRemovePlace(id) {
-    // modal.current.open();
     setModalIsOpen(true);
     selectedPlace.current = id;
   }
 
   function handleStopRemovePlace() {
-    // modal.current.close();
     setModalIsOpen(false);
   }
 
@@ -67,7 +63,6 @@ function App() {
     setPickedPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
-    // modal.current.close();
     setModalIsOpen(false);
 
     // [부수 효과] 로컬 스토리지에서 id 삭제
