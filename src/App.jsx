@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 
 import Places from "./components/Places.jsx";
 import { AVAILABLE_PLACES } from "./data.js";
@@ -62,12 +62,13 @@ function App() {
     }
   }
 
-  function handleRemovePlace() {
+  // useCallback : 인수로 보낸 함수를 return. 메모리로서 내부에 저장
+  const handleRemovePlace = useCallback(function handleRemovePlace() {
     setPickedPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
     // modal.current.close();
-    setModalIsOpen(false);
+    // setModalIsOpen(false);
 
     // [부수 효과] 로컬 스토리지에서 id 삭제
     const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
@@ -75,7 +76,7 @@ function App() {
       "selectedPlaces",
       JSON.stringify(storedIds.filter((id) => id !== selectedPlace.current))
     );
-  }
+  }, []);
 
   return (
     <>
